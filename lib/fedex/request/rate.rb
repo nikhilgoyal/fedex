@@ -16,7 +16,10 @@ module Fedex
             rate_details = [rate_reply[:rated_shipment_details]].flatten.first[:shipment_rate_detail]
             rate_details.merge!(service_type: rate_reply[:service_type])
             rate_details.merge!(transit_time: rate_reply[:transit_time])
-            Fedex::Rate.new(rate_details)
+            a = []
+            a << rate_details[:service_type]
+            a << rate_details[:total_net_charge][:amount]
+            a
           end
         else
           error_message = if response[:rate_reply]
